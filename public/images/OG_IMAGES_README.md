@@ -15,6 +15,7 @@ This directory contains placeholder Open Graph images that need to be replaced w
    - Service highlights
 
 ## Image Requirements:
+
 - Format: JPG or PNG
 - Dimensions: 1200x630px (1.91:1 ratio)
 - File size: Under 1MB
@@ -22,8 +23,7 @@ This directory contains placeholder Open Graph images that need to be replaced w
 - Brand colors: Red (#e53935) and professional styling
 
 ## Current Status:
+
 - Placeholder images are referenced in metadata
 - Replace with actual branded images before launch
 - Update image paths in layout.js and services/page.js if filenames change
-
-

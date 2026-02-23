@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   IoPencilOutline,
@@ -7,54 +7,54 @@ import {
   IoHeadsetOutline,
   IoRocketOutline,
   IoShieldOutline,
-} from "react-icons/io5";
+} from 'react-icons/io5';
 
 const ICON_MAP = {
-  "pencil-outline": IoPencilOutline,
-  "hammer-outline": IoHammerOutline,
-  "checkmark-circle-outline": IoCheckmarkCircleOutline,
-  "headset-outline": IoHeadsetOutline,
-  "rocket-outline": IoRocketOutline,
-  "shield-outline": IoShieldOutline,
+  'pencil-outline': IoPencilOutline,
+  'hammer-outline': IoHammerOutline,
+  'checkmark-circle-outline': IoCheckmarkCircleOutline,
+  'headset-outline': IoHeadsetOutline,
+  'rocket-outline': IoRocketOutline,
+  'shield-outline': IoShieldOutline,
 };
 
 export default function Features() {
   const items = [
     {
-      icon: "pencil-outline",
-      title: "Expert Design",
+      icon: 'pencil-outline',
+      title: 'Expert Design',
       content:
         "BAFE-certified designers create compliant fire alarm systems tailored to your building's specific requirements. Free site surveys and detailed proposals included.",
     },
     {
-      icon: "hammer-outline",
-      title: "Professional Installation",
+      icon: 'hammer-outline',
+      title: 'Professional Installation',
       content:
-        "NICET-trained technicians install systems using premium equipment. All work guaranteed with full compliance certificates and insurance coverage.",
+        'NICET-trained technicians install systems using premium equipment. All work guaranteed with full compliance certificates and insurance coverage.',
     },
     {
-      icon: "checkmark-circle-outline",
-      title: "Thorough Commissioning",
+      icon: 'checkmark-circle-outline',
+      title: 'Thorough Commissioning',
       content:
-        "Complete system testing and commissioning with local authority sign-off. Includes staff training and emergency procedure documentation.",
+        'Complete system testing and commissioning with local authority sign-off. Includes staff training and emergency procedure documentation.',
     },
     {
-      icon: "headset-outline",
-      title: "24/7 Support",
+      icon: 'headset-outline',
+      title: '24/7 Support',
       content:
-        "Round-the-clock monitoring and emergency call-out service. Average response time under 2 hours for critical issues across London & South East.",
+        'Round-the-clock monitoring and emergency call-out service. Average response time under 2 hours for critical issues across London & South East.',
     },
     {
-      icon: "rocket-outline",
-      title: "Fast Delivery",
+      icon: 'rocket-outline',
+      title: 'Fast Delivery',
       content:
-        "Projects completed on schedule with minimal disruption. Same-day emergency installations available for urgent requirements.",
+        'Projects completed on schedule with minimal disruption. Same-day emergency installations available for urgent requirements.',
     },
     {
-      icon: "shield-outline",
-      title: "Ongoing Maintenance",
+      icon: 'shield-outline',
+      title: 'Ongoing Maintenance',
       content:
-        "Comprehensive maintenance contracts ensure optimal system performance. Regular inspections, testing, and compliance reporting included.",
+        'Comprehensive maintenance contracts ensure optimal system performance. Regular inspections, testing, and compliance reporting included.',
     },
   ];
 
@@ -64,10 +64,7 @@ export default function Features() {
         {items.map((i) => {
           const Icon = ICON_MAP[i.icon] || IoPencilOutline;
           return (
-            <div
-              key={i.title}
-              className="flex flex-col items-center text-center p-4 sm:p-6"
-            >
+            <div key={i.title} className="flex flex-col items-center text-center p-4 sm:p-6">
               <div className="mb-3 sm:mb-4 rounded-full border-2 border-[#e53935] bg-[#555] p-3 sm:p-4">
                 <Icon className="text-white" size={40} />
               </div>

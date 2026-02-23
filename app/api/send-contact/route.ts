@@ -19,7 +19,7 @@ function checkRateLimit(ip: string): boolean {
   }
 
   const record = rateLimitStore.get(ip);
-  
+
   if (now > record.resetTime) {
     record.count = 1;
     record.resetTime = now + windowMs;
@@ -43,7 +43,11 @@ function validateInput(data: any): { isValid: boolean; errors: string[] } {
     errors.push('Name is required and must be at least 2 characters');
   }
 
-  if (!data.email || typeof data.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+  if (
+    !data.email ||
+    typeof data.email !== 'string' ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)
+  ) {
     errors.push('Valid email address is required');
   }
 
@@ -61,13 +65,7 @@ function validateInput(data: any): { isValid: boolean; errors: string[] } {
   }
 
   // Check for suspicious content
-  const suspiciousPatterns = [
-    /http[s]?:\/\//gi,
-    /www\./gi,
-    /\.com/gi,
-    /bit\.ly/gi,
-    /tinyurl/gi,
-  ];
+  const suspiciousPatterns = [/http[s]?:\/\//gi, /www\./gi, /\.com/gi, /bit\.ly/gi, /tinyurl/gi];
 
   const textToCheck = `${data.name} ${data.message}`;
   for (const pattern of suspiciousPatterns) {
@@ -79,23 +77,22 @@ function validateInput(data: any): { isValid: boolean; errors: string[] } {
 
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
 export async function POST(request: NextRequest) {
   try {
     // Get client IP for rate limiting
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') || 
-               'unknown';
+    const ip =
+      request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
 
     // Check rate limit
     if (!checkRateLimit(ip)) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Too many requests. Please try again later.' 
+        {
+          success: false,
+          error: 'Too many requests. Please try again later.',
         },
         { status: 429 }
       );
@@ -108,10 +105,10 @@ export async function POST(request: NextRequest) {
     const validation = validateInput(data);
     if (!validation.isValid) {
       return NextResponse.json(
-        { 
-          success: false, 
-          error: 'Invalid input', 
-          details: validation.errors 
+        {
+          success: false,
+          error: 'Invalid input',
+          details: validation.errors,
         },
         { status: 400 }
       );
@@ -160,7 +157,7 @@ IP Address: ${ip}
             <p>IP Address: ${ip}</p>
           </div>
         </div>
-      `
+      `,
     };
 
     // Send email
@@ -171,7 +168,7 @@ IP Address: ${ip}
       const autoReplyContent = {
         to: data.email,
         from: process.env.FROM_EMAIL || 'noreply@wpfire.co.uk',
-        subject: 'Thank you for contacting WP Fire - We\'ll be in touch soon',
+        subject: "Thank you for contacting WP Fire - We'll be in touch soon",
         text: `
 Dear ${data.name},
 
@@ -215,7 +212,7 @@ Website: https://wpfire.co.uk
               Website: <a href="https://wpfire.co.uk" style="color: #e53935;">wpfire.co.uk</a></p>
             </div>
           </div>
-        `
+        `,
       };
 
       try {
@@ -228,16 +225,15 @@ Website: https://wpfire.co.uk
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for your message. We will respond within 2 hours during business hours.'
+      message: 'Thank you for your message. We will respond within 2 hours during business hours.',
     });
-
   } catch (error) {
     console.error('Contact form error:', error);
-    
+
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to send message. Please try again or call us directly.' 
+      {
+        success: false,
+        error: 'Failed to send message. Please try again or call us directly.',
       },
       { status: 500 }
     );
@@ -255,5 +251,3 @@ export async function OPTIONS() {
     },
   });
 }
-
-

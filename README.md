@@ -25,7 +25,7 @@ A modern, production-ready Next.js website for WP Fire, a professional fire alar
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 - SendGrid account (for contact form)
 - Netlify account (for deployment)
@@ -118,7 +118,7 @@ curl -X POST http://localhost:3000/api/send-contact \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
-    "email": "test@example.com", 
+    "email": "test@example.com",
     "phone": "01234567890",
     "message": "Test message",
     "service": "fire-alarm-installation"
@@ -234,16 +234,19 @@ npm run test:coverage      # Coverage report
 ### Common Issues
 
 **Contact form not sending emails:**
+
 - Check SendGrid API key is correct
 - Verify sender email is verified in SendGrid
 - Check Netlify/Vercel environment variables
 
 **Build failures:**
+
 - Ensure Node.js version 18+
 - Clear `.next` folder and `node_modules`
 - Run `npm install` again
 
 **Images not loading:**
+
 - Check image paths in `public/images/`
 - Verify Next.js Image component usage
 - Check for CORS issues

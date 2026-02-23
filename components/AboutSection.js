@@ -1,13 +1,13 @@
-"use client"; // Ensure client-side for react-scroll compatibility
+'use client'; // Ensure client-side for react-scroll compatibility
 
-import React from "react";
-import { Element } from "react-scroll"; // Import Element
-import Image from "next/image";
+import React from 'react';
+import { Element } from 'react-scroll'; // Import Element
+import Image from 'next/image';
 
 const AboutSection = () => {
   return (
     <Element name="about-section">
-      {" "}
+      {' '}
       {/* Wrap with Element for proper spy registration */}
       <section
         id="about-section"
@@ -19,27 +19,25 @@ const AboutSection = () => {
           </span>
 
           <h2 className="font-bold text-black tracking-tight text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-6 sm:mb-8 md:mb-10 lg:mb-12 xl:mb-14">
-            Your Local Fire Safety Specialists: Professional Installation,
-            Maintenance & Compliance Services Across London & South East England
+            Your Local Fire Safety Specialists: Professional Installation, Maintenance & Compliance
+            Services Across London & South East England
           </h2>
 
           <div className="about-section-flex flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-4 sm:mb-5">
             <div className="about-section-texts w-full lg:w-1/2">
               <p className="about-section-text-1 leading-relaxed sm:leading-loose pl-0 sm:pl-4 lg:pl-5 mb-4 sm:mb-5 text-base sm:text-lg lg:text-xl font-medium">
-                <strong>So why do our clients choose WP Fire --</strong> and why
-                do they return to us for new projects? The answer is simple: we
-                put the customer first. Every system we design, install,
-                commission, or maintain is tailored to the specific needs of the
+                <strong>So why do our clients choose WP Fire --</strong> and why do they return to
+                us for new projects? The answer is simple: we put the customer first. Every system
+                we design, install, commission, or maintain is tailored to the specific needs of the
                 building and the people who rely on it.
               </p>
 
               <p className="about-section-text-2 font-light leading-relaxed sm:leading-loose pl-0 sm:pl-4 lg:pl-5 text-base sm:text-lg lg:text-xl">
-                Established in 2022 with a clear mission: to deliver reliable,
-                compliant, and high-quality fire and security solutions that
-                protect people, property, and businesses. In a short time, we
-                have built strong relationships with local councils, developers,
-                and main contractors, who trust us to handle projects of all
-                sizes with professionalism and care.
+                Established in 2022 with a clear mission: to deliver reliable, compliant, and
+                high-quality fire and security solutions that protect people, property, and
+                businesses. In a short time, we have built strong relationships with local councils,
+                developers, and main contractors, who trust us to handle projects of all sizes with
+                professionalism and care.
               </p>
 
               <div className="pl-0 sm:pl-4 lg:pl-5 mt-6">

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import NextLink from "next/link";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { IoCallOutline } from "react-icons/io5";
-import { scroller } from "react-scroll";
+import NextLink from 'next/link';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { IoCallOutline } from 'react-icons/io5';
+import { scroller } from 'react-scroll';
 
 // Simple throttler
 const throttle = (func, limit) => {
@@ -17,12 +17,15 @@ const throttle = (func, limit) => {
       lastRan = Date.now();
     } else {
       clearTimeout(lastFunc);
-      lastFunc = setTimeout(() => {
-        if (Date.now() - lastRan >= limit) {
-          func(...args);
-          lastRan = Date.now();
-        }
-      }, Math.max(0, limit - (Date.now() - lastRan)));
+      lastFunc = setTimeout(
+        () => {
+          if (Date.now() - lastRan >= limit) {
+            func(...args);
+            lastRan = Date.now();
+          }
+        },
+        Math.max(0, limit - (Date.now() - lastRan))
+      );
     }
   };
 };
@@ -34,7 +37,7 @@ export default function Header() {
   const mobileContentRef = useRef(null);
   const lastTopRef = useRef(0);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState('home');
   const [maxVH, setMaxVH] = useState(1);
 
   // Dynamic --vh to prevent mobile viewport jumps, set to max height
@@ -43,17 +46,17 @@ export default function Header() {
       const newVH = window.innerHeight * 0.01;
       if (newVH > maxVH) {
         setMaxVH(newVH);
-        document.documentElement.style.setProperty("--vh", `${newVH}px`);
+        document.documentElement.style.setProperty('--vh', `${newVH}px`);
       }
     }, 200);
 
     updateVH();
-    window.addEventListener("resize", updateVH);
-    window.addEventListener("orientationchange", updateVH);
+    window.addEventListener('resize', updateVH);
+    window.addEventListener('orientationchange', updateVH);
 
     return () => {
-      window.removeEventListener("resize", updateVH);
-      window.removeEventListener("orientationchange", updateVH);
+      window.removeEventListener('resize', updateVH);
+      window.removeEventListener('orientationchange', updateVH);
     };
   }, [maxVH]);
 
@@ -66,14 +69,14 @@ export default function Header() {
     }, 200);
 
     updateHeaderHeight();
-    window.addEventListener("resize", updateHeaderHeight);
+    window.addEventListener('resize', updateHeaderHeight);
 
-    return () => window.removeEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
   // scroll spy hook (kept from your original logic)
   const useScrollSpy = (ids, offset = 0) => {
-    const [activeId, setActiveId] = useState("home");
+    const [activeId, setActiveId] = useState('home');
 
     useEffect(() => {
       const handleScroll = throttle(() => {
@@ -81,7 +84,7 @@ export default function Header() {
         const viewportHeight = window.innerHeight;
 
         if (scrollPosition < viewportHeight * 0.3) {
-          setActiveId("home");
+          setActiveId('home');
           return;
         }
 
@@ -101,24 +104,22 @@ export default function Header() {
             break;
           }
         }
-        setActiveId(
-          newActive || (scrollPosition < viewportHeight * 0.3 ? "home" : "")
-        );
+        setActiveId(newActive || (scrollPosition < viewportHeight * 0.3 ? 'home' : ''));
       }, 100);
 
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener('scroll', handleScroll);
       handleScroll();
-      return () => window.removeEventListener("scroll", handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }, [ids, offset]);
 
     return activeId;
   };
 
-  const sectionIds = ["home", "about-section", "contact-section"];
+  const sectionIds = ['home', 'about-section', 'contact-section'];
   const currentActive = useScrollSpy(sectionIds, headerHeight);
 
   useEffect(() => {
-    if (pathname === "/") {
+    if (pathname === '/') {
       setActiveSection(currentActive);
     }
   }, [currentActive, pathname]);
@@ -146,7 +147,7 @@ export default function Header() {
     compute();
 
     // recompute when window resizes (fonts could reflow)
-    window.addEventListener("resize", compute);
+    window.addEventListener('resize', compute);
 
     // recompute whenever the mobile menu opens so measurement happens on the visible content
     // (this handles late font/image loads and ensures accurate measurement)
@@ -160,7 +161,7 @@ export default function Header() {
     }
 
     return () => {
-      window.removeEventListener("resize", compute);
+      window.removeEventListener('resize', compute);
       observer.disconnect();
     };
   }, []);
@@ -180,7 +181,7 @@ export default function Header() {
     e.preventDefault(); // Always prevent default to control behavior
     const sectionId = hash.slice(1);
 
-    if (pathname === "/") {
+    if (pathname === '/') {
       // Same-page scroll (unchanged)
       scroller.scrollTo(sectionId, {
         duration: 500,
@@ -192,15 +193,15 @@ export default function Header() {
       setMobileOpen(false);
     } else {
       // Cross-page: Set target and navigate without hash to avoid browser default scroll
-      sessionStorage.setItem("scrollTarget", sectionId);
-      router.push("/"); // Navigate to root without hash
+      sessionStorage.setItem('scrollTarget', sectionId);
+      router.push('/'); // Navigate to root without hash
       setMobileOpen(false);
     }
   };
 
   useEffect(() => {
-    if (pathname === "/") {
-      const scrollTarget = sessionStorage.getItem("scrollTarget");
+    if (pathname === '/') {
+      const scrollTarget = sessionStorage.getItem('scrollTarget');
 
       if (scrollTarget) {
         lastTopRef.current = 0; // Reset lastTop for new target
@@ -222,7 +223,7 @@ export default function Header() {
             });
             // After scroll animation, add hash to URL without triggering navigation
             setTimeout(() => {
-              window.history.replaceState(null, "", `#${scrollTarget}`);
+              window.history.replaceState(null, '', `#${scrollTarget}`);
               setActiveSection(scrollTarget);
             }, 550);
           } else {
@@ -233,7 +234,7 @@ export default function Header() {
         };
 
         setTimeout(scrollToSection, 300); // Timeout for content stabilization (unchanged)
-        sessionStorage.removeItem("scrollTarget");
+        sessionStorage.removeItem('scrollTarget');
       }
     }
   }, [pathname]);
@@ -253,24 +254,22 @@ export default function Header() {
     };
 
     if (mobileOpen) {
-      document.addEventListener("click", handleClickOutside);
+      document.addEventListener('click', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [mobileOpen]);
 
   const baseLinkClass =
-    "inline-block no-underline font-normal text-base hover:text-[#cf711f] active:text-[#b24f00] focus:outline-none focus:ring-0 transition-colors duration-200";
+    'inline-block no-underline font-normal text-base hover:text-[#cf711f] active:text-[#b24f00] focus:outline-none focus:ring-0 transition-colors duration-200';
 
   const getLinkClass = (section) => {
-    if (pathname !== "/") {
+    if (pathname !== '/') {
       return `${baseLinkClass} text-[#333]`;
     }
-    return `${baseLinkClass} ${
-      activeSection === section ? "text-[#cf711f]" : "text-[#333]"
-    }`;
+    return `${baseLinkClass} ${activeSection === section ? 'text-[#cf711f]' : 'text-[#333]'}`;
   };
 
   // small helper to force a repaint (used after closing in some browsers)
@@ -280,18 +279,15 @@ export default function Header() {
   };
 
   return (
-    <header
-      ref={headerRef}
-      className="sticky top-0 z-50 w-full bg-white shadow-md"
-    >
+    <header ref={headerRef} className="sticky top-0 z-50 w-full bg-white shadow-md">
       <div className="w-full max-w-[70rem] mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 lg:h-24 flex items-center justify-between">
         <NextLink
           href="/"
           onClick={(e) => {
-            if (pathname === "/") {
+            if (pathname === '/') {
               e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              router.replace("/");
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              router.replace('/');
               setMobileOpen(false);
             }
           }}
@@ -313,13 +309,13 @@ export default function Header() {
             <li>
               <NextLink
                 href="/"
-                className={getLinkClass("home")}
+                className={getLinkClass('home')}
                 onClick={(e) => {
-                  if (pathname === "/") {
+                  if (pathname === '/') {
                     e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    router.replace("/");
-                    setTimeout(() => setActiveSection("home"), 550);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    router.replace('/');
+                    setTimeout(() => setActiveSection('home'), 550);
                   }
                 }}
               >
@@ -330,7 +326,7 @@ export default function Header() {
               <NextLink
                 href="/services"
                 className={`${baseLinkClass} ${
-                  pathname === "/services" ? "text-[#cf711f]" : "text-[#333]"
+                  pathname === '/services' ? 'text-[#cf711f]' : 'text-[#333]'
                 }`}
               >
                 Services
@@ -339,8 +335,8 @@ export default function Header() {
             <li>
               <NextLink
                 href="/#about-section"
-                className={getLinkClass("about-section")}
-                onClick={(e) => handleHashClick(e, "#about-section")}
+                className={getLinkClass('about-section')}
+                onClick={(e) => handleHashClick(e, '#about-section')}
               >
                 About
               </NextLink>
@@ -348,8 +344,8 @@ export default function Header() {
             <li>
               <NextLink
                 href="/#contact-section"
-                className={getLinkClass("contact-section")}
-                onClick={(e) => handleHashClick(e, "#contact-section")}
+                className={getLinkClass('contact-section')}
+                onClick={(e) => handleHashClick(e, '#contact-section')}
               >
                 Contact
               </NextLink>
@@ -359,17 +355,10 @@ export default function Header() {
 
         <div className="hidden sm:flex gap-3 lg:gap-4 items-center justify-center">
           <div className="border-l border-gray-300 h-4 mr-2" />
-          <IoCallOutline
-            size={28}
-            className="text-[#e53935] sm:w-6 sm:h-6 lg:w-8 lg:h-8"
-          />
+          <IoCallOutline size={28} className="text-[#e53935] sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
           <div className="flex flex-col">
-            <span className="text-xs lg:text-sm font-medium text-[#555]">
-              CALL US NOW
-            </span>
-            <h2 className="text-base lg:text-lg xl:text-xl font-bold">
-              0333 880 2993
-            </h2>
+            <span className="text-xs lg:text-sm font-medium text-[#555]">CALL US NOW</span>
+            <h2 className="text-base lg:text-lg xl:text-xl font-bold">0333 880 2993</h2>
           </div>
         </div>
 
@@ -382,17 +371,17 @@ export default function Header() {
         >
           <span
             className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
-              mobileOpen ? "rotate-45 translate-y-2" : ""
+              mobileOpen ? 'rotate-45 translate-y-2' : ''
             }`}
           ></span>
           <span
             className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
-              mobileOpen ? "opacity-0" : ""
+              mobileOpen ? 'opacity-0' : ''
             }`}
           ></span>
           <span
             className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
-              mobileOpen ? "-rotate-45 -translate-y-2" : ""
+              mobileOpen ? '-rotate-45 -translate-y-2' : ''
             }`}
           ></span>
         </button>
@@ -403,14 +392,14 @@ export default function Header() {
         className={`md:hidden absolute left-0 right-0 top-full bg-white shadow-lg z-40 transition-all duration-300 ease-in-out overflow-hidden`}
         aria-hidden={!mobileOpen}
         style={{
-          maxHeight: mobileOpen ? `${mobileMaxHeight}px` : "0px",
+          maxHeight: mobileOpen ? `${mobileMaxHeight}px` : '0px',
           opacity: mobileOpen ? 1 : 0,
-          paddingTop: mobileOpen ? "1.5rem" : "0",
-          paddingBottom: mobileOpen ? "1.5rem" : "0",
-          WebkitBackfaceVisibility: "hidden",
-          backfaceVisibility: "hidden",
-          transform: "translateZ(0)",
-          pointerEvents: mobileOpen ? "auto" : "none",
+          paddingTop: mobileOpen ? '1.5rem' : '0',
+          paddingBottom: mobileOpen ? '1.5rem' : '0',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+          transform: 'translateZ(0)',
+          pointerEvents: mobileOpen ? 'auto' : 'none',
         }}
       >
         <div className="max-w-[70rem] mx-auto px-6" ref={mobileContentRef}>
@@ -420,11 +409,11 @@ export default function Header() {
                 href="/"
                 className={`${baseLinkClass} text-[#333] block py-3 hover:bg-gray-50 rounded-md px-2 transition-all`}
                 onClick={(e) => {
-                  if (pathname === "/") {
+                  if (pathname === '/') {
                     e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: "smooth" });
-                    router.replace("/");
-                    setTimeout(() => setActiveSection("home"), 550);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    router.replace('/');
+                    setTimeout(() => setActiveSection('home'), 550);
                   }
                   setMobileOpen(false);
                   forceRepaint();
@@ -446,7 +435,7 @@ export default function Header() {
               <NextLink
                 href="/#about-section"
                 className={`${baseLinkClass} text-[#333] block py-3 hover:bg-gray-50 rounded-md px-2 transition-all`}
-                onClick={(e) => handleHashClick(e, "#about-section")}
+                onClick={(e) => handleHashClick(e, '#about-section')}
               >
                 About
               </NextLink>
@@ -455,7 +444,7 @@ export default function Header() {
               <NextLink
                 href="/#contact-section"
                 className={`${baseLinkClass} text-[#333] block py-3 hover:bg-gray-50 rounded-md px-2 transition-all`}
-                onClick={(e) => handleHashClick(e, "#contact-section")}
+                onClick={(e) => handleHashClick(e, '#contact-section')}
               >
                 Contact
               </NextLink>
@@ -465,9 +454,7 @@ export default function Header() {
           <div className="mt-6 py-4 border-t border-gray-200 flex items-center justify-center gap-3">
             <IoCallOutline size={24} className="text-[#e53935]" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-[#555]">
-                CALL US NOW
-              </span>
+              <span className="text-sm font-medium text-[#555]">CALL US NOW</span>
               <h2 className="text-lg font-bold">0333 880 2993</h2>
             </div>
           </div>

@@ -1,15 +1,14 @@
-import "./globals.css";
-import Header from "../components/main-header/Header";
-import Footer from "../components/Footer";
+import './globals.css';
+import Header from '../components/main-header/Header';
+import Footer from '../components/Footer';
 
 export const metadata = {
-  title: "WP Fire - Fire Alarm Installation Services",
-  description:
-    "Your trusted partner for professional fire alarm installation services.",
+  title: 'WP Fire - Fire Alarm Installation Services',
+  description: 'Your trusted partner for professional fire alarm installation services.',
 };
 
 export const viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   minimumScale: 1,
 };

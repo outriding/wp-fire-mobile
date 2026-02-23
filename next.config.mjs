@@ -9,16 +9,16 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  
+
   // Performance optimizations
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['react-icons'],
   },
-  
+
   // Compression
   compress: true,
-  
+
   // Security headers
   async headers() {
     return [
@@ -54,7 +54,7 @@ const nextConfig = {
       },
     ];
   },
-  
+
   // Redirects for SEO
   async redirects() {
     return [
