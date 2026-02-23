@@ -13,7 +13,24 @@ const nextConfig = {
     optimizePackageImports: ['react-icons', 'three', '@react-three/fiber'],
   },
 
+  turbopack: {
+    rules: {
+      '*.{glsl,vs,fs,vert,frag}': {
+        loaders: ['raw-loader'],
+        as: '*.js',
+      },
+    },
+  },
+
   compress: true,
+
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(glsl|vs|fs|vert|frag)$/,
+      use: ['raw-loader'],
+    });
+    return config;
+  },
 
   async headers() {
     return [
