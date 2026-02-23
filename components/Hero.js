@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Element, scroller } from "react-scroll";
-import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import { Element, scroller } from 'react-scroll';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 // Simple throttler for resize events
 const throttle = (func, limit) => {
@@ -16,12 +16,15 @@ const throttle = (func, limit) => {
       lastRan = Date.now();
     } else {
       clearTimeout(lastFunc);
-      lastFunc = setTimeout(() => {
-        if (Date.now() - lastRan >= limit) {
-          func(...args);
-          lastRan = Date.now();
-        }
-      }, Math.max(0, limit - (Date.now() - lastRan)));
+      lastFunc = setTimeout(
+        () => {
+          if (Date.now() - lastRan >= limit) {
+            func(...args);
+            lastRan = Date.now();
+          }
+        },
+        Math.max(0, limit - (Date.now() - lastRan))
+      );
     }
   };
 };
@@ -34,21 +37,21 @@ const HeroSlider = () => {
   // Dynamically measure header height on mount and resize
   useEffect(() => {
     const updateHeaderHeight = throttle(() => {
-      const header = document.querySelector("header");
+      const header = document.querySelector('header');
       if (header) {
         setHeaderHeight(header.clientHeight);
       }
     }, 200);
 
     requestAnimationFrame(updateHeaderHeight); // Measure after initial render
-    window.addEventListener("resize", updateHeaderHeight);
+    window.addEventListener('resize', updateHeaderHeight);
 
-    return () => window.removeEventListener("resize", updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
   const handleScrollToContact = (e) => {
     e.preventDefault();
-    const sectionId = "contact-section";
+    const sectionId = 'contact-section';
     if (window.location.hash === `#${sectionId}`) {
       // If already at section, recalculate and scroll again if needed
       scroller.scrollTo(sectionId, {
@@ -69,21 +72,14 @@ const HeroSlider = () => {
   };
 
   // Dynamic height style for the hero
-  const dynamicHeight =
-    headerHeight > 0 ? `calc(100vh - ${headerHeight}px)` : "100vh";
+  const dynamicHeight = headerHeight > 0 ? `calc(100vh - ${headerHeight}px)` : '100vh';
 
   return (
     <Element name="home">
       <section className="section-1 relative">
-        <div
-          className="slideshow-container relative mx-auto"
-          style={{ height: dynamicHeight }}
-        >
+        <div className="slideshow-container relative mx-auto" style={{ height: dynamicHeight }}>
           <div className="mySlides animate-fade">
-            <div
-              className="relative w-screen"
-              style={{ height: dynamicHeight }}
-            >
+            <div className="relative w-screen" style={{ height: dynamicHeight }}>
               <Image
                 src="/images/fire-alarm-landing-1.jpg"
                 alt="Professional fire alarm installation in modern office building"
@@ -104,8 +100,7 @@ const HeroSlider = () => {
                 Professional Fire Alarm Installation & Maintenance Services
               </h1>
               <p className="text-white text-sm sm:text-base md:text-lg lg:text-xl font-medium mb-4 sm:mb-6 bg-[rgba(25,25,25,0.5)] p-3 sm:p-4 lg:p-6 rounded-sm sm:rounded-md">
-                BAFE-certified technicians ✓ 24/7 monitoring ✓ Fast response
-                times
+                BAFE-certified technicians ✓ 24/7 monitoring ✓ Fast response times
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">

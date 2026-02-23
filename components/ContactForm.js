@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function Contact() {
   const mapRef = useRef(null);
@@ -26,10 +26,10 @@ export default function Contact() {
     const data = Object.fromEntries(form.entries());
 
     try {
-      const response = await fetch("https://formspree.io/f/xovkzkpn", {
-        method: "POST",
+      const response = await fetch('https://formspree.io/f/xovkzkpn', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
@@ -38,10 +38,10 @@ export default function Contact() {
 
       if (response.ok && result.ok) {
         // Formspree uses { ok: true } for success
-        setSubmitStatus("success");
+        setSubmitStatus('success');
         formElement.reset(); // Use stored reference
       } else {
-        setSubmitStatus("error");
+        setSubmitStatus('error');
         if (result.errors) {
           // Map Formspree errors (array of { field, message })
           const errorMap = result.errors.reduce((acc, err) => {
@@ -50,14 +50,14 @@ export default function Contact() {
           }, {});
           setErrors(errorMap);
         } else {
-          setErrors({ general: result.error || "Failed to send message" });
+          setErrors({ general: result.error || 'Failed to send message' });
         }
       }
     } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitStatus("error");
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
       setErrors({
-        general: "Network error. Please try again or call us directly.",
+        general: 'Network error. Please try again or call us directly.',
       });
     } finally {
       setIsSubmitting(false);
@@ -74,9 +74,8 @@ export default function Contact() {
         Get Your Free Fire Safety Quote Today
       </h2>
       <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-        Ready to protect your property? Our BAFE-certified team provides free
-        site surveys and detailed quotes for all fire safety installations. Call
-        now or complete the form below.
+        Ready to protect your property? Our BAFE-certified team provides free site surveys and
+        detailed quotes for all fire safety installations. Call now or complete the form below.
       </p>
       {/* Main container */}
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-6xl py-4 sm:py-6 md:py-8 gap-6 sm:gap-8">
@@ -91,25 +90,25 @@ export default function Contact() {
             noValidate
           >
             <p className="italic text-gray-500 mb-3 sm:mb-4 text-xs sm:text-sm">
-              Fields marked with an <span className="text-red-600">*</span> are
-              required. We&apos;ll respond within 2 hours during business hours.
+              Fields marked with an <span className="text-red-600">*</span> are required. We&apos;ll
+              respond within 2 hours during business hours.
             </p>
 
             {/* Success/Error Messages */}
-            {submitStatus === "success" && (
+            {submitStatus === 'success' && (
               <div
                 className="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md"
                 role="alert"
               >
                 <p className="font-semibold">Thank you!</p>
                 <p>
-                  Your message has been sent successfully. We&apos;ll respond
-                  within 2 hours during business hours.
+                  Your message has been sent successfully. We&apos;ll respond within 2 hours during
+                  business hours.
                 </p>
               </div>
             )}
 
-            {submitStatus === "error" && (
+            {submitStatus === 'error' && (
               <div
                 className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-md"
                 role="alert"
@@ -117,8 +116,8 @@ export default function Contact() {
                 <p className="font-semibold">Error sending message</p>
                 <p>
                   {errors.general ||
-                    Object.values(errors).join(", ") ||
-                    "Please try again or call us directly at 0333 880 2993."}
+                    Object.values(errors).join(', ') ||
+                    'Please try again or call us directly at 0333 880 2993.'}
                 </p>
               </div>
             )}
@@ -127,16 +126,12 @@ export default function Contact() {
             <input
               type="text"
               name="_gotcha"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               tabIndex={-1}
               autoComplete="off"
             />
             {/* Hidden subject field to fix 422 validation */}
-            <input
-              type="hidden"
-              name="_subject"
-              value="New submission from WP Fire Contact Form"
-            />
+            <input type="hidden" name="_subject" value="New submission from WP Fire Contact Form" />
             {/* Row 1 */}
             <div className="flex flex-col sm:flex-row justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
               <div className="flex-1">
@@ -151,12 +146,7 @@ export default function Contact() {
                   aria-describedby="name-error"
                   className="w-full p-2 sm:p-3 text-sm sm:text-base mt-1 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
-                <div
-                  id="name-error"
-                  className="sr-only"
-                  role="alert"
-                  aria-live="polite"
-                ></div>
+                <div id="name-error" className="sr-only" role="alert" aria-live="polite"></div>
               </div>
               <div className="flex-1">
                 <label htmlFor="service" className="block text-sm sm:text-base">
@@ -168,16 +158,10 @@ export default function Contact() {
                   className="w-full p-2 sm:p-3 text-sm sm:text-base mt-1 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 >
                   <option value="">Select a service</option>
-                  <option value="fire-alarm-installation">
-                    Fire Alarm Installation
-                  </option>
-                  <option value="fire-alarm-maintenance">
-                    Fire Alarm Maintenance
-                  </option>
+                  <option value="fire-alarm-installation">Fire Alarm Installation</option>
+                  <option value="fire-alarm-maintenance">Fire Alarm Maintenance</option>
                   <option value="emergency-lighting">Emergency Lighting</option>
-                  <option value="fire-risk-assessment">
-                    Fire Risk Assessment
-                  </option>
+                  <option value="fire-risk-assessment">Fire Risk Assessment</option>
                   <option value="security-systems">Security Systems</option>
                   <option value="other">Other</option>
                 </select>
@@ -197,12 +181,7 @@ export default function Contact() {
                   aria-describedby="email-error"
                   className="w-full p-2 sm:p-3 text-sm sm:text-base mt-1 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
-                <div
-                  id="email-error"
-                  className="sr-only"
-                  role="alert"
-                  aria-live="polite"
-                ></div>
+                <div id="email-error" className="sr-only" role="alert" aria-live="polite"></div>
               </div>
               <div className="flex-1">
                 <label htmlFor="phone" className="block text-sm sm:text-base">
@@ -216,12 +195,7 @@ export default function Contact() {
                   aria-describedby="phone-error"
                   className="w-full p-2 sm:p-3 text-sm sm:text-base mt-1 border border-gray-300 rounded-sm bg-white focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
-                <div
-                  id="phone-error"
-                  className="sr-only"
-                  role="alert"
-                  aria-live="polite"
-                ></div>
+                <div id="phone-error" className="sr-only" role="alert" aria-live="polite"></div>
               </div>
             </div>
             {/* Message */}
@@ -236,12 +210,7 @@ export default function Contact() {
                 aria-describedby="message-error"
                 className="w-full p-2 sm:p-3 text-sm sm:text-base mt-1 border border-gray-300 rounded-sm h-24 sm:h-28 bg-white focus:ring-2 focus:ring-red-500 focus:border-transparent resize-vertical"
               ></textarea>
-              <div
-                id="message-error"
-                className="sr-only"
-                role="alert"
-                aria-live="polite"
-              ></div>
+              <div id="message-error" className="sr-only" role="alert" aria-live="polite"></div>
             </div>
             {/* Button */}
             <button
@@ -250,25 +219,23 @@ export default function Contact() {
               className="px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base text-white bg-red-600 rounded-sm hover:bg-red-700 transition-colors duration-200 self-start mt-1 w-full sm:w-auto focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-describedby="submit-status"
             >
-              {isSubmitting ? "Sending..." : "Get Free Quote"}
+              {isSubmitting ? 'Sending...' : 'Get Free Quote'}
             </button>
             <div id="submit-status" className="sr-only" aria-live="polite">
               {isSubmitting
-                ? "Sending your message..."
-                : submitStatus === "success"
-                ? "Message sent successfully"
-                : submitStatus === "error"
-                ? "Failed to send message"
-                : ""}
+                ? 'Sending your message...'
+                : submitStatus === 'success'
+                  ? 'Message sent successfully'
+                  : submitStatus === 'error'
+                    ? 'Failed to send message'
+                    : ''}
             </div>
           </form>
         </div>
         {/* Contact Info & Testimonials */}
         <div className="flex justify-center w-full lg:w-1/2">
           <div className="flex flex-col gap-6 sm:gap-8 md:gap-10 text-gray-800 w-full max-w-sm sm:max-w-md text-sm sm:text-base items-start">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-light">
-              Contact Information
-            </h3>
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-light">Contact Information</h3>
             <div className="space-y-4">
               <div>
                 <p className="text-base sm:text-lg font-semibold text-red-600">
@@ -277,46 +244,34 @@ export default function Contact() {
                 <p className="text-sm text-gray-600">24/7 Emergency Service</p>
               </div>
               <div>
-                <p className="text-base sm:text-lg font-semibold text-red-600">
-                  info@wpfire.co.uk
-                </p>
+                <p className="text-base sm:text-lg font-semibold text-red-600">info@wpfire.co.uk</p>
                 <p className="text-sm text-gray-600">Response within 2 hours</p>
               </div>
               <div>
                 <p className="text-base sm:text-lg font-light">
                   8 The Lindens, Stock, <br /> Ingatestone, CM4 9NH
                 </p>
-                <p className="text-sm text-gray-600">
-                  Serving London & South East
-                </p>
+                <p className="text-sm text-gray-600">Serving London & South East</p>
               </div>
             </div>
 
             {/* Testimonials */}
             <div className="mt-8">
-              <h4 className="text-lg font-semibold mb-4">
-                What Our Clients Say
-              </h4>
+              <h4 className="text-lg font-semibold mb-4">What Our Clients Say</h4>
               <div className="space-y-4">
                 <div className="bg-white p-4 rounded-lg shadow-sm">
                   <p className="text-sm italic mb-2">
-                    &quot;WP Fire installed our fire alarm system quickly and
-                    professionally. Their BAFE certification gave us confidence
-                    in their expertise.&quot;
+                    &quot;WP Fire installed our fire alarm system quickly and professionally. Their
+                    BAFE certification gave us confidence in their expertise.&quot;
                   </p>
-                  <p className="text-xs text-gray-600">
-                    - Sarah M., Property Manager
-                  </p>
+                  <p className="text-xs text-gray-600">- Sarah M., Property Manager</p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow-sm">
                   <p className="text-sm italic mb-2">
-                    &quot;Excellent service from start to finish. The team was
-                    knowledgeable, punctual, and the system works
-                    perfectly.&quot;
+                    &quot;Excellent service from start to finish. The team was knowledgeable,
+                    punctual, and the system works perfectly.&quot;
                   </p>
-                  <p className="text-xs text-gray-600">
-                    - James R., Business Owner
-                  </p>
+                  <p className="text-xs text-gray-600">- James R., Business Owner</p>
                 </div>
               </div>
             </div>
