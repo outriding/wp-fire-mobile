@@ -14,6 +14,9 @@ const roboto = Roboto({
 export const metadata = {
   title: 'WP Fire - Fire Alarm Installation Services',
   description: 'Your trusted partner for professional fire alarm installation services.',
+  verification: {
+    google: 'jQRlBNLFGxNM4gWnV4o2XIsrbTJGpva8KJC3owSzHOc',
+  },
 };
 
 export const viewport = {
