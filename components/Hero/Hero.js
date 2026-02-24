@@ -48,7 +48,13 @@ const Hero = () => {
                 <Link
                   href="/#contact-section"
                   onClick={handleScrollToContact}
-                  className="get-quote font-roboto text-sm sm:text-base md:text-lg lg:text-xl font-semibold text-white bg-[#e53935] px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4 rounded-sm sm:rounded-md inline-block cursor-pointer no-underline transition-colors duration-300 hover:bg-[#c62828] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+                  className="get-quote font-roboto text-sm sm:text-base md:text-lg lg:text-xl font-semibold
+                    bg-red-700 text-white
+                    px-4 sm:px-6 lg:px-8 py-2 sm:py-3 lg:py-4
+                    rounded-sm sm:rounded-md inline-block cursor-pointer no-underline
+                    transition-colors duration-300
+                    hover:bg-red-800 active:bg-red-900
+                    focus:outline-none focus:ring-4 focus:ring-red-300"
                   aria-label="Request a free fire safety quote"
                 >
                   Request Free Quote

@@ -4,7 +4,7 @@ export default function ServicesPage() {
       <main className="max-w-7xl mx-auto px-6  lg:py-20 pl-20">
         <header className="mb-10">
           <h1 className="text-4xl lg:text-5xl font-light mb-4">Our Services</h1>
-          <p className="text-lg text-gray-600 max-w-3xl">
+          <p className="text-lg text-gray-700 max-w-3xl">
             This is a list of the services that we offer. Please note that this is a representative
             list and is not intended to be exhaustive. If you would like a bespoke service that is
             not listed here, please get in touch and a member of our team will be happy to help.
@@ -16,7 +16,7 @@ export default function ServicesPage() {
           <h2 className="text-2xl font-medium mb-4">Life Safety Systems</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3  items-start gap-10">
             <div className="lg:col-span-2">
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-700 leading-relaxed mb-6">
                 We specialise in the design, installation, and maintenance of life safety systems
                 that protect people and property. From fire alarms to emergency lighting and
                 integrated safety solutions, we ensure every system is compliant, reliable, and
@@ -62,7 +62,7 @@ export default function ServicesPage() {
           <h2 className="text-2xl font-medium mb-4">Security</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3  items-start">
             <div className="lg:col-span-2">
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-700 leading-relaxed mb-6">
                 We provide consultation, design, and installation of a wide range of electrical
                 security systems, tailored to the needs of both commercial and residential
                 properties. In today’s world, advanced security technology is essential, and its
