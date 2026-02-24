@@ -1,4 +1,4 @@
-// src/components/ScrollToHash.tsx
+// src/components/ScrollToHash
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
