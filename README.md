@@ -29,8 +29,7 @@ Currently expanding my Three.js skills (react-three-fiber, shaders, glTF, post-p
 - Next.js 15.5 (App Router) + React 19
 - Tailwind CSS 4
 - Three.js + canvas integration
-- Secure server-side contact form (SendGrid + spam protection)
-- Full JSON-LD schema, sitemap, OG images
+- Client-side contact form via Formspree with spam protection
 - WCAG AA accessible + perfect Lighthouse
 
 ### Perfect For Agencies
