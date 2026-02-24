@@ -59,44 +59,53 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     smokeGeometry.translate(0, 0.5, 0);
     smokeGeometry.scale(2.8, 6.5, 2.0);
 
-    const textureLoader = new THREE.TextureLoader();
-    const perlinTexture = textureLoader.load('/images/perlin.png');
-    perlinTexture.wrapS = THREE.RepeatWrapping;
-    perlinTexture.wrapT = THREE.RepeatWrapping;
-
-    const baseMaterial = new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms: {
-        uTime: { value: 0 },
-        uPerlinTexture: { value: perlinTexture },
-        uUvOffset: { value: new THREE.Vector2(0, 0) },
-        uUvScale: { value: new THREE.Vector2(1, 1) },
-        uStrength: { value: 1.0 },
-      },
-      side: THREE.DoubleSide,
-      transparent: true,
-      depthWrite: false,
-    });
-
-    const smoke1 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
-    smoke1.material.uniforms.uUvOffset.value.set(0.0, 0.0);
-    smoke1.material.uniforms.uUvScale.value.set(1.0, 1.0);
-    scene.add(smoke1);
-
-    const smoke2 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
-    smoke2.material.uniforms.uUvOffset.value.set(0.43, 0.19);
-    smoke2.material.uniforms.uUvScale.value.set(1.35, 0.82);
-    scene.add(smoke2);
-
-    const smoke3 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
-    smoke3.material.uniforms.uUvOffset.value.set(0.76, -0.27);
-    smoke3.material.uniforms.uUvScale.value.set(0.88, 1.18);
-    scene.add(smoke3);
-
-    const smokeMeshes = [smoke1, smoke2, smoke3];
-
     let baseCamY = 10;
+
+    const textureLoader = new THREE.TextureLoader();
+    let perlinTexture;
+    let smokeMeshes = [];
+    let smoke1, smoke2, smoke3;
+
+    textureLoader.load('/images/perlin.png', (texture) => {
+      perlinTexture = texture;
+      perlinTexture.wrapS = THREE.RepeatWrapping;
+      perlinTexture.wrapT = THREE.RepeatWrapping;
+
+      const baseMaterial = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          uTime: { value: 0 },
+          uPerlinTexture: { value: perlinTexture },
+          uUvOffset: { value: new THREE.Vector2(0, 0) },
+          uUvScale: { value: new THREE.Vector2(1, 1) },
+          uStrength: { value: 1.0 },
+        },
+        side: THREE.DoubleSide,
+        transparent: true,
+        depthWrite: false,
+      });
+
+      smoke1 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
+      smoke1.material.uniforms.uUvOffset.value.set(0.0, 0.0);
+      smoke1.material.uniforms.uUvScale.value.set(1.0, 1.0);
+      scene.add(smoke1);
+
+      smoke2 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
+      smoke2.material.uniforms.uUvOffset.value.set(0.43, 0.19);
+      smoke2.material.uniforms.uUvScale.value.set(1.35, 0.82);
+      scene.add(smoke2);
+
+      smoke3 = new THREE.Mesh(smokeGeometry, baseMaterial.clone());
+      smoke3.material.uniforms.uUvOffset.value.set(0.76, -0.27);
+      smoke3.material.uniforms.uUvScale.value.set(0.88, 1.18);
+      scene.add(smoke3);
+
+      smokeMeshes = [smoke1, smoke2, smoke3];
+
+      // Ensure first responsive layout after meshes exist
+      updateResponsive();
+    });
 
     const getConfig = (w) => {
       if (w < 420)
@@ -143,8 +152,7 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
           camX: 6.45,
           camZ: 13.0,
           camY: 10.45,
-        }; // ← 1024px iPad tuned here
-      // Desktop unchanged
+        };
       return {
         xShift: 4.95,
         baseScale: 0.825,
@@ -156,6 +164,8 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     };
 
     const updateResponsive = () => {
+      if (!containerRef.current) return;
+
       width = containerRef.current.clientWidth;
       height = containerRef.current.clientHeight;
       const aspect = width / height;
@@ -167,17 +177,19 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
       const cfg = getConfig(width);
       const aspectFactor = Math.max(0.7, Math.min(1.12, aspect / 1.7));
 
-      smoke1.position.set(cfg.xShift, 0.08, 0);
-      smoke1.scale.set(cfg.baseScale * aspectFactor * 1.06, 1.035, 1);
-      smoke1.material.uniforms.uStrength.value = cfg.strengths[0];
+      if (smoke1 && smoke2 && smoke3) {
+        smoke1.position.set(cfg.xShift, 0.08, 0);
+        smoke1.scale.set(cfg.baseScale * aspectFactor * 1.06, 1.035, 1);
+        smoke1.material.uniforms.uStrength.value = cfg.strengths[0];
 
-      smoke2.position.set(cfg.xShift - 0.27, -0.4, -1.33);
-      smoke2.scale.set(cfg.baseScale * 1.2 * aspectFactor, 1.095, 1);
-      smoke2.material.uniforms.uStrength.value = cfg.strengths[1];
+        smoke2.position.set(cfg.xShift - 0.27, -0.4, -1.33);
+        smoke2.scale.set(cfg.baseScale * 1.2 * aspectFactor, 1.095, 1);
+        smoke2.material.uniforms.uStrength.value = cfg.strengths[1];
 
-      smoke3.position.set(cfg.xShift + 0.37, 0.55, 2.0);
-      smoke3.scale.set(cfg.baseScale * 0.85 * aspectFactor, 0.935, 1);
-      smoke3.material.uniforms.uStrength.value = cfg.strengths[2];
+        smoke3.position.set(cfg.xShift + 0.37, 0.55, 2.0);
+        smoke3.scale.set(cfg.baseScale * 0.85 * aspectFactor, 0.935, 1);
+        smoke3.material.uniforms.uStrength.value = cfg.strengths[2];
+      }
 
       camera.position.set(cfg.camX, cfg.camY, cfg.camZ);
       camera.lookAt(cfg.xShift * 0.2, 3.35, 0);
@@ -185,32 +197,40 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
       baseCamY = cfg.camY;
     };
 
+    // Initial layout (safe even before meshes exist)
     updateResponsive();
 
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
     let req;
-    const animate = () => {
-      const elapsed = clock.getElapsedTime();
-      smokeMeshes.forEach((mesh, i) => {
-        mesh.material.uniforms.uTime.value = elapsed + i * 2.1;
-      });
+    const animate = (time) => {
+      timer.update(time);
+      const elapsed = timer.getElapsed();
+
+      if (smokeMeshes.length) {
+        smokeMeshes.forEach((mesh, i) => {
+          mesh.material.uniforms.uTime.value = elapsed + i * 2.1;
+        });
+      }
+
       camera.position.y = baseCamY + Math.sin(elapsed * 0.06) * 0.2;
       renderer.render(scene, camera);
+
       req = requestAnimationFrame(animate);
     };
-    animate();
+    req = requestAnimationFrame(animate);
 
     const handleResize = throttle(updateResponsive, 80);
     window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', () => setTimeout(updateResponsive, 160));
+    const handleOrientationChange = () => setTimeout(updateResponsive, 160);
+    window.addEventListener('orientationchange', handleOrientationChange);
 
     return () => {
       cancelAnimationFrame(req);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
+      window.removeEventListener('orientationchange', handleOrientationChange);
       renderer.dispose();
       smokeGeometry.dispose();
-      perlinTexture.dispose();
+      if (perlinTexture) perlinTexture.dispose();
       smokeMeshes.forEach((m) => {
         m.material.dispose();
         m.geometry.dispose();

@@ -1,7 +1,7 @@
 uniform float uTime;
 uniform sampler2D uPerlinTexture;
-uniform vec2 uUvOffset;   // ← NEW
-uniform vec2 uUvScale;    // ← NEW (for frequency variation)
+uniform vec2 uUvOffset; 
+uniform vec2 uUvScale;    
 
 varying vec2 vUv;
 
