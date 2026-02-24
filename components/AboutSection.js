@@ -14,7 +14,7 @@ const AboutSection = () => {
         className="pt-16 sm:pt-20 md:pt-24 lg:pt-32 xl:pt-25 pb-8 sm:pb-12 md:pb-16 lg:pb-20 bg-[#f5f5f5] mb-4 sm:mb-5 w-full"
       >
         <div className="max-w-[70rem] px-4 sm:px-6 lg:px-8 mx-auto w-full">
-          <span className="block text-sm sm:text-base font-medium uppercase tracking-wider text-red-500">
+          <span className="block text-sm sm:text-base font-medium uppercase tracking-wider text-red-700">
             Trusted Fire Safety Experts Since 2022
           </span>
 
@@ -46,19 +46,19 @@ const AboutSection = () => {
                 </h3>
                 <ul className="space-y-2 text-sm sm:text-base text-gray-700">
                   <li className="flex items-center">
-                    <span className="text-red-500 mr-2">✓</span>
+                    <span className="text-red-700 mr-2">✓</span>
                     BAFE-certified fire safety technicians
                   </li>
                   <li className="flex items-center">
-                    <span className="text-red-500 mr-2">✓</span>
+                    <span className="text-red-700 mr-2">✓</span>
                     Fully insured & liability protected
                   </li>
                   <li className="flex items-center">
-                    <span className="text-red-500 mr-2">✓</span>
+                    <span className="text-red-700 mr-2">✓</span>
                     Local authority approved contractor
                   </li>
                   <li className="flex items-center">
-                    <span className="text-red-500 mr-2">✓</span>
+                    <span className="text-red-700 mr-2">✓</span>
                     24/7 emergency call-out service
                   </li>
                 </ul>

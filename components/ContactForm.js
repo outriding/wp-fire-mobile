@@ -70,10 +70,10 @@ export default function Contact() {
       className="p-6 sm:p-8 md:p-12 lg:p-16 xl:p-20 bg-gray-100 min-h-[100vh] flex flex-col justify-center items-center"
     >
       {/* Header */}
-      <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 md:mb-8 text-center text-red-600 font-extralight">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 md:mb-8 text-center text-red-700 font-extralight">
         Get Your Free Fire Safety Quote Today
       </h2>
-      <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+      <p className="text-center text-gray-700 mb-8 max-w-2xl mx-auto">
         Ready to protect your property? Our BAFE-certified team provides free site surveys and
         detailed quotes for all fire safety installations. Call now or complete the form below.
       </p>
@@ -89,8 +89,8 @@ export default function Contact() {
             aria-label="Contact form for fire safety services quote"
             noValidate
           >
-            <p className="italic text-gray-500 mb-3 sm:mb-4 text-xs sm:text-sm">
-              Fields marked with an <span className="text-red-600">*</span> are required. We&apos;ll
+            <p className="italic text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm">
+              Fields marked with an <span className="text-red-700">*</span> are required. We&apos;ll
               respond within 2 hours during business hours.
             </p>
 
@@ -136,7 +136,7 @@ export default function Contact() {
             <div className="flex flex-col sm:flex-row justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
               <div className="flex-1">
                 <label htmlFor="name" className="block text-sm sm:text-base">
-                  Your Name:<span className="text-red-600">*</span>
+                  Your Name:<span className="text-red-700">*</span>
                 </label>
                 <input
                   type="text"
@@ -171,7 +171,7 @@ export default function Contact() {
             <div className="flex flex-col sm:flex-row justify-between mb-3 sm:mb-4 gap-2 sm:gap-3">
               <div className="flex-1">
                 <label htmlFor="email" className="block text-sm sm:text-base">
-                  Your Email:<span className="text-red-600">*</span>
+                  Your Email:<span className="text-red-700">*</span>
                 </label>
                 <input
                   type="email"
@@ -185,7 +185,7 @@ export default function Contact() {
               </div>
               <div className="flex-1">
                 <label htmlFor="phone" className="block text-sm sm:text-base">
-                  Your Phone Number:<span className="text-red-600">*</span>
+                  Your Phone Number:<span className="text-red-700">*</span>
                 </label>
                 <input
                   type="tel"
@@ -201,7 +201,7 @@ export default function Contact() {
             {/* Message */}
             <div className="mb-3 sm:mb-4">
               <label htmlFor="message" className="block text-sm sm:text-base">
-                Message:<span className="text-red-600">*</span>
+                Message:<span className="text-red-700">*</span>
               </label>
               <textarea
                 id="message"
@@ -238,20 +238,20 @@ export default function Contact() {
             <h3 className="text-xl sm:text-2xl md:text-3xl font-light">Contact Information</h3>
             <div className="space-y-4">
               <div>
-                <p className="text-base sm:text-lg font-semibold text-red-600">
+                <p className="text-base sm:text-lg font-semibold text-red-700">
                   Call Now: 0333 880 2993
                 </p>
-                <p className="text-sm text-gray-600">24/7 Emergency Service</p>
+                <p className="text-sm text-gray-700">24/7 Emergency Service</p>
               </div>
               <div>
-                <p className="text-base sm:text-lg font-semibold text-red-600">info@wpfire.co.uk</p>
-                <p className="text-sm text-gray-600">Response within 2 hours</p>
+                <p className="text-base sm:text-lg font-semibold text-red-700">info@wpfire.co.uk</p>
+                <p className="text-sm text-gray-700">Response within 2 hours</p>
               </div>
               <div>
                 <p className="text-base sm:text-lg font-light">
                   8 The Lindens, Stock, <br /> Ingatestone, CM4 9NH
                 </p>
-                <p className="text-sm text-gray-600">Serving London & South East</p>
+                <p className="text-sm text-gray-700">Serving London & South East</p>
               </div>
             </div>
 
@@ -264,14 +264,14 @@ export default function Contact() {
                     &quot;WP Fire installed our fire alarm system quickly and professionally. Their
                     BAFE certification gave us confidence in their expertise.&quot;
                   </p>
-                  <p className="text-xs text-gray-600">- Sarah M., Property Manager</p>
+                  <p className="text-xs text-gray-700">- Sarah M., Property Manager</p>
                 </div>
                 <div className="bg-white p-4 rounded-lg shadow-sm">
                   <p className="text-sm italic mb-2">
                     &quot;Excellent service from start to finish. The team was knowledgeable,
                     punctual, and the system works perfectly.&quot;
                   </p>
-                  <p className="text-xs text-gray-600">- James R., Business Owner</p>
+                  <p className="text-xs text-gray-700">- James R., Business Owner</p>
                 </div>
               </div>
             </div>

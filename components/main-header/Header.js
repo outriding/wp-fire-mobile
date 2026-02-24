@@ -355,7 +355,7 @@ export default function Header() {
 
         <div className="hidden sm:flex gap-3 lg:gap-4 items-center justify-center">
           <div className="border-l border-gray-300 h-4 mr-2" />
-          <IoCallOutline size={28} className="text-[#e53935] sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
+          <IoCallOutline size={28} className="text-red-700 sm:w-6 sm:h-6 lg:w-8 lg:h-8" />
           <div className="flex flex-col">
             <span className="text-xs lg:text-sm font-medium text-[#555]">CALL US NOW</span>
             <h2 className="text-base lg:text-lg xl:text-xl font-bold">0333 880 2993</h2>
@@ -391,6 +391,7 @@ export default function Header() {
       <nav
         className={`md:hidden absolute left-0 right-0 top-full bg-white shadow-lg z-40 transition-all duration-300 ease-in-out overflow-hidden`}
         aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
         style={{
           maxHeight: mobileOpen ? `${mobileMaxHeight}px` : '0px',
           opacity: mobileOpen ? 1 : 0,
@@ -452,7 +453,7 @@ export default function Header() {
           </ul>
           {/* Added call section for mobile */}
           <div className="mt-6 py-4 border-t border-gray-200 flex items-center justify-center gap-3">
-            <IoCallOutline size={24} className="text-[#e53935]" />
+            <IoCallOutline size={24} className="text-red-700" />
             <div className="flex flex-col">
               <span className="text-sm font-medium text-[#555]">CALL US NOW</span>
               <h2 className="text-lg font-bold">0333 880 2993</h2>

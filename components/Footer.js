@@ -32,24 +32,29 @@ export default function Footer() {
             />
           </NextLink>
           <div>
-            <p className="text-sm text-gray-600">WP Fire — Fire safety services</p>
+            <p className="text-sm text-gray-700">WP Fire — Fire safety services</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
+          {/* Instagram - Fixed for Lighthouse */}
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/wpfire" // ← CHANGE to your real Instagram
             target="_blank"
-            rel="noreferrer"
-            className="text-gray-600 hover:text-[#cf711f]"
+            rel="noopener noreferrer"
+            className="text-gray-700 hover:text-[#cf711f]"
+            aria-label="Follow WP Fire on Instagram"
           >
             <IoLogoInstagram size={20} />
           </a>
+
+          {/* Facebook - Fixed for Lighthouse */}
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/wpfire" // ← CHANGE to your real Facebook
             target="_blank"
-            rel="noreferrer"
-            className="text-gray-600 hover:text-[#cf711f]"
+            rel="noopener noreferrer"
+            className="text-gray-700 hover:text-[#cf711f]"
+            aria-label="Follow WP Fire on Facebook"
           >
             <IoLogoFacebook size={20} />
           </a>

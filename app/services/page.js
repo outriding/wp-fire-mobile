@@ -121,7 +121,7 @@ export default function ServicesPage() {
           <h1 className="text-4xl lg:text-5xl font-light mb-4">
             Professional Fire Safety Services
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl">
+          <p className="text-lg text-gray-700 max-w-3xl">
             Comprehensive fire safety solutions for residential and commercial properties. Our
             BAFE-certified technicians deliver fully compliant installations with 24/7 support
             across London and South East England. Get your free quote today.
@@ -129,14 +129,14 @@ export default function ServicesPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
             <a
               href="tel:03338802993"
-              className="bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors text-center"
+              className="bg-red-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors text-center"
             >
               Call Now: 0333 880 2993
             </a>
             <Link
               href="/#contact-section"
               onClick={handleScrollToContact}
-              className="bg-transparent border-2 border-red-600 text-red-600 px-6 py-3 rounded-md font-semibold hover:bg-red-600 hover:text-white transition-colors text-center"
+              className="bg-transparent border-2 border-red-700 text-red-700 px-6 py-3 rounded-md font-semibold hover:bg-red-600 hover:text-white transition-colors text-center"
             >
               Request Free Quote
             </Link>
@@ -148,7 +148,7 @@ export default function ServicesPage() {
           <h2 className="text-2xl font-medium mb-4">Life Safety Systems</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 items-start gap-10">
             <div className="lg:col-span-2">
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-700 leading-relaxed mb-6">
                 <strong>Complete fire safety solutions</strong> designed to protect lives and
                 property. Our BAFE-certified team delivers fully compliant fire alarm systems,
                 emergency lighting, and integrated safety solutions. Every installation includes
@@ -193,7 +193,7 @@ export default function ServicesPage() {
           <h2 className="text-2xl font-medium mb-4">Security</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 items-start">
             <div className="lg:col-span-2">
-              <p className="text-gray-600 leading-relaxed mb-6">
+              <p className="text-gray-700 leading-relaxed mb-6">
                 <strong>Advanced security systems</strong> for complete property protection. Our
                 expert team designs and installs state-of-the-art intruder alarms, CCTV
                 surveillance, access control, and intercom systems. All installations include remote
