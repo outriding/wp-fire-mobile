@@ -7,8 +7,8 @@ import fragmentShader from './shaders/fragment.glsl';
 import { throttle } from '@/lib/throttle';
 
 const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
-  const canvasRef = useRef(null);
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
@@ -38,12 +38,17 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     smokeGeometry.translate(0, 0.5, 0);
     smokeGeometry.scale(2.8, 6.5, 2.0);
 
+    type SmokeMesh = THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>;
+
     let baseCamY = 10;
 
     const textureLoader = new THREE.TextureLoader();
-    let perlinTexture;
-    let smokeMeshes = [];
-    let smoke1, smoke2, smoke3;
+    let perlinTexture: THREE.Texture;
+    let smokeMeshes: SmokeMesh[] = [];
+
+    let smoke1: SmokeMesh;
+    let smoke2: SmokeMesh;
+    let smoke3: SmokeMesh;
 
     textureLoader.load('/images/perlin.png', (texture) => {
       perlinTexture = texture;
@@ -86,7 +91,7 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
       updateResponsive();
     });
 
-    const getConfig = (w) => {
+    const getConfig = (w: number) => {
       if (w < 420)
         return {
           xShift: 1.05,
@@ -180,8 +185,8 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     updateResponsive();
 
     const timer = new THREE.Timer();
-    let req;
-    const animate = (time) => {
+    let req: number;
+    const animate = (time: number) => {
       timer.update(time);
       const elapsed = timer.getElapsed();
 

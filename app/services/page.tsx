@@ -42,7 +42,7 @@ export default function ServicesPage() {
   const router = useRouter();
   const headerHeight = useHeaderHeight();
   // Handle scroll to contact section
-  const handleScrollToContact = (e) => {
+  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const sectionId = 'contact-section';
 

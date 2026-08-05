@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
@@ -36,10 +36,13 @@ export default function Contact() {
         setSubmitStatus('error');
         if (result.errors) {
           // Map Formspree errors (array of { field, message })
-          const errorMap = result.errors.reduce((acc, err) => {
-            acc[err.field] = err.message;
-            return acc;
-          }, {});
+          const errorMap = result.errors.reduce(
+            (acc: Record<string, string>, err: { field: string; message: string }) => {
+              acc[err.field] = err.message;
+              return acc;
+            },
+            {}
+          );
           setErrors(errorMap);
         } else {
           setErrors({ general: result.error || 'Failed to send message' });
