@@ -1,4 +1,3 @@
-// app/layout.tsx   ← still .tsx because it contains JSX
 import './globals.css';
 import { Roboto } from 'next/font/google';
 import Header from '../components/main-header/Header';

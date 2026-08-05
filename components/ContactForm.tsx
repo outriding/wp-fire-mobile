@@ -7,7 +7,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  async function handleSubmit(e: React.MouseEvent<HTMLAnchorElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
