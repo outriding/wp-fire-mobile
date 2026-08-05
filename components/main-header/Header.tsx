@@ -7,6 +7,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { IoCallOutline } from 'react-icons/io5';
 import { scroller } from 'react-scroll';
 import { throttle } from '@/lib/throttle';
+import { useScrollSpy } from '@/hooks/useScrollSpy';
+
+const SECTION_IDS = ['home', 'about-section', 'contact-section'] as const;
 
 export default function Header() {
   const pathname = usePathname();
@@ -15,7 +18,6 @@ export default function Header() {
   const mobileContentRef = useRef<HTMLDivElement>(null);
   const lastTopRef = useRef(0);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const [activeSection, setActiveSection] = useState('home');
 
   // Update header height on mount and resize for dynamic offset
   useEffect(() => {
@@ -31,84 +33,30 @@ export default function Header() {
     return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
-  const sectionIds = ['home', 'about-section', 'contact-section'];
-
-  // scroll spy hook (kept from your original logic)
-  const useScrollSpy = (ids: typeof sectionIds, offset = 0) => {
-    const [activeId, setActiveId] = useState('home');
-
-    useEffect(() => {
-      const handleScroll = throttle(() => {
-        const scrollPosition = window.scrollY;
-        const viewportHeight = window.innerHeight;
-
-        if (scrollPosition < viewportHeight * 0.3) {
-          setActiveId('home');
-          return;
-        }
-
-        let newActive = null;
-        for (const id of ids) {
-          const el = document.getElementById(id);
-          if (!el) continue;
-          const rect = el.getBoundingClientRect();
-          const elementHeight = rect.height || el.offsetHeight || 1;
-          const visibleHeight = Math.min(
-            elementHeight,
-            Math.max(0, rect.bottom) - Math.max(0, rect.top)
-          );
-          const visiblePercentage = (visibleHeight / elementHeight) * 100;
-          if (visiblePercentage > 30 && rect.top <= 200) {
-            newActive = id;
-            break;
-          }
-        }
-        setActiveId(newActive || (scrollPosition < viewportHeight * 0.3 ? 'home' : ''));
-      }, 100);
-
-      window.addEventListener('scroll', handleScroll);
-      handleScroll();
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, [ids, offset]);
-
-    return activeId;
-  };
-
-  const currentActive = useScrollSpy(sectionIds, headerHeight);
-
-  useEffect(() => {
-    if (pathname === '/') {
-      setActiveSection(currentActive);
-    }
-  }, [currentActive, pathname]);
+  const currentActive = useScrollSpy(SECTION_IDS, headerHeight);
 
   // mobile menu state
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileMaxHeight, setMobileMaxHeight] = useState(0);
 
-  useEffect(() => {
-    // close mobile nav when path changes
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   // compute dynamic max-height for smooth height animation
   useEffect(() => {
     const compute = () => {
       if (mobileContentRef.current) {
-        // include a small buffer for padding / safe-area so last item isn't clipped
         const measured = mobileContentRef.current.scrollHeight;
-        setMobileMaxHeight(measured + 24); // 24px buffer
+        setMobileMaxHeight(measured + 24);
       }
     };
 
-    // compute on mount
     compute();
-
-    // recompute when window resizes (fonts could reflow)
     window.addEventListener('resize', compute);
 
-    // recompute whenever the mobile menu opens so measurement happens on the visible content
-    // (this handles late font/image loads and ensures accurate measurement)
     const observer = new MutationObserver(() => compute());
     if (mobileContentRef.current) {
       observer.observe(mobileContentRef.current, {
@@ -126,7 +74,6 @@ export default function Header() {
 
   useEffect(() => {
     if (mobileOpen) {
-      // measure on next paint now the menu is logically opening
       requestAnimationFrame(() => {
         if (mobileContentRef.current) {
           setMobileMaxHeight(mobileContentRef.current.scrollHeight + 24);
@@ -136,23 +83,21 @@ export default function Header() {
   }, [mobileOpen]);
 
   const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
-    e.preventDefault(); // Always prevent default to control behavior
+    e.preventDefault();
     const sectionId = hash.slice(1);
 
     if (pathname === '/') {
-      // Same-page scroll (unchanged)
       scroller.scrollTo(sectionId, {
         duration: 500,
         smooth: true,
         offset: -headerHeight,
       });
-      router.replace(hash); // Update hash without reload
-      setTimeout(() => setActiveSection(sectionId), 550);
+      router.replace(hash);
+
       setMobileOpen(false);
     } else {
-      // Cross-page: Set target and navigate without hash to avoid browser default scroll
       sessionStorage.setItem('scrollTarget', sectionId);
-      router.push('/'); // Navigate to root without hash
+      router.push('/');
       setMobileOpen(false);
     }
   };
@@ -162,7 +107,7 @@ export default function Header() {
       const scrollTarget = sessionStorage.getItem('scrollTarget');
 
       if (scrollTarget) {
-        lastTopRef.current = 0; // Reset lastTop for new target
+        lastTopRef.current = 0;
         const scrollToSection = () => {
           const element = document.getElementById(scrollTarget);
           if (!element || !headerRef.current) {
@@ -172,26 +117,22 @@ export default function Header() {
 
           const currentTop = element.offsetTop;
           if (currentTop === lastTopRef.current) {
-            // OffsetTop has stabilized; perform the scroll
             const freshHeaderHeight = headerRef.current.clientHeight;
             scroller.scrollTo(scrollTarget, {
               duration: 500,
               smooth: true,
               offset: -freshHeaderHeight,
             });
-            // After scroll animation, add hash to URL without triggering navigation
             setTimeout(() => {
               window.history.replaceState(null, '', `#${scrollTarget}`);
-              setActiveSection(scrollTarget);
             }, 550);
           } else {
-            // OffsetTop changed; update and check again next frame
             lastTopRef.current = currentTop;
             requestAnimationFrame(scrollToSection);
           }
         };
 
-        setTimeout(scrollToSection, 300); // Timeout for content stabilization (unchanged)
+        setTimeout(scrollToSection, 300);
         sessionStorage.removeItem('scrollTarget');
       }
     }
@@ -218,7 +159,7 @@ export default function Header() {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [mobileOpen]); // ← don't forget the dependency
+  }, [mobileOpen]);
 
   const baseLinkClass =
     'inline-block no-underline font-normal text-base hover:text-[#cf711f] active:text-[#b24f00] focus:outline-none focus:ring-0 transition-colors duration-200';
@@ -227,10 +168,9 @@ export default function Header() {
     if (pathname !== '/') {
       return `${baseLinkClass} text-[#333]`;
     }
-    return `${baseLinkClass} ${activeSection === section ? 'text-[#cf711f]' : 'text-[#333]'}`;
+    return `${baseLinkClass} ${currentActive === section ? 'text-[#cf711f]' : 'text-[#333]'}`;
   };
 
-  // small helper to force a repaint (used after closing in some browsers)
   const forceRepaint = () => {
     void document.body.offsetHeight;
     requestAnimationFrame(() => {});
@@ -273,7 +213,6 @@ export default function Header() {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     router.replace('/');
-                    setTimeout(() => setActiveSection('home'), 550);
                   }
                 }}
               >
@@ -372,7 +311,6 @@ export default function Header() {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     router.replace('/');
-                    setTimeout(() => setActiveSection('home'), 550);
                   }
                   setMobileOpen(false);
                   forceRepaint();
