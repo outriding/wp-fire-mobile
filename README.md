@@ -1,48 +1,53 @@
-# WP Fire – Next.js 15 + Three.js Client Project
+# WP Fire
 
-**Live Demo:** [https://www.wpfire.co.uk](https://www.wpfire.co.uk)
+Production website for a BAFE-certified fire safety company operating across London and the South East.
 
-![WP Fire Hero – Next.js + Three.js Canvas](public/images/screenshot-hero.png)
+**Live:** [wpfire.co.uk](https://www.wpfire.co.uk)
 
-A complete production single-page website built for a BAFE-certified fire safety company.
+![WP Fire hero — Next.js and Three.js canvas](public/images/screenshot-hero.png)
 
-This was my **first commercial Next.js project**, created to deliver a fast, minimal, high-converting landing page while incorporating a subtle Three.js canvas in the hero for depth and modern feel.
+Two-page marketing site with a custom GLSL smoke simulation in the hero. Built and maintained as client work.
 
-### Lighthouse Scores (Feb 2026)
+## Stack
 
-| Device      | Performance | Accessibility | Best Practices | SEO     |
-| ----------- | ----------- | ------------- | -------------- | ------- |
-| **Mobile**  | **98**      | **100**       | **100**        | **100** |
-| **Desktop** | **100**     | **100**       | **100**        | **100** |
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript** (strict mode)
+- **Tailwind CSS 4**
+- **Three.js 0.185** with custom vertex/fragment shaders
+- Formspree contact form with honeypot spam protection
 
-### Three.js Canvas Integration (Key Showcase)
+## Hero shader
 
-- Subtle animated smoke/fire effect in the hero section using Three.js v0.183
-- Zero impact on performance (still 98 mobile Lighthouse)
-- Clean integration with Next.js 15 App Router + React 19
-- Demonstrates early capability for immersive hero elements, product visualisers, and minimal 3D experiences
+The hero background is three layered planes sharing a single geometry, each with a cloned `ShaderMaterial` offset and scaled differently to build depth.
 
-Currently expanding my Three.js skills (react-three-fiber, shaders, glTF, post-processing) and actively looking for agency collaborations.
+- **Vertex shader** samples a Perlin noise texture to drive a rotational twist along the plane's Y axis, plus a wind displacement weighted by height — so the base stays anchored while the top drifts.
+- **Fragment shader** scrolls the same noise texture vertically for the smoke motion, applies `smoothstep` falloff on all four UV edges to dissolve the plane borders, and mixes in a warm tint weighted toward the base for the fire glow.
+- Geometry resolution and camera framing adapt across six breakpoints; the render loop and WebGL context are disposed on unmount.
 
-### Tech Stack
+## Lighthouse
 
-- Next.js 15.5 (App Router) + React 19
-- Tailwind CSS 4
-- Three.js + canvas integration
-- Client-side contact form via Formspree with spam protection
-- WCAG AA accessible + perfect Lighthouse
+Measured February 2026 on the production deployment.
 
-### Perfect For Agencies
+| Device  | Performance | Accessibility | Best Practices | SEO |
+| ------- | ----------- | ------------- | -------------- | --- |
+| Mobile  | 98          | 100           | 100            | 100 |
+| Desktop | 100         | 100           | 100            | 100 |
 
-Clean, well-commented codebase ready for client handoff. Ideal for:
+## Notes
 
-- Fast-loading minimal landing pages
-- Subtle 3D/immersive hero sections
-- Portfolio upgrades with Three.js
-- High-performance Next.js projects
+- Accessible to WCAG AA: semantic landmarks, labelled form fields, live regions for submission status, visible focus states throughout.
+- Statically prerendered and deployed on Vercel.
+- Shaders are imported as raw text via Turbopack loader rules (see `next.config.mjs`).
 
-**Open for freelance / subcontracting / collaboration** on Three.js, creative React, or Next.js work.
+## Local development
 
-Get in touch: [@peterridingdev](https://x.com/peterridingdev) or via the contact form on the live site.
+```bash
+npm install
+npm run dev
+```
 
-⭐ Star if you're an agency or dev working with Next.js + Three.js!
+Copy `env.example` to `.env.local` and add your Formspree form ID.
+
+---
+
+Built by [Peter Riding](https://x.com/pdriding) — freelance front-end development, Next.js and WebGL.
