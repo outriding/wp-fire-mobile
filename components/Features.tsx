@@ -9,7 +9,9 @@ import {
   IoShieldOutline,
 } from 'react-icons/io5';
 
-const ICON_MAP = {
+import type { IconType } from 'react-icons';
+
+const ICON_MAP: Record<string, IconType> = {
   'pencil-outline': IoPencilOutline,
   'hammer-outline': IoHammerOutline,
   'checkmark-circle-outline': IoCheckmarkCircleOutline,

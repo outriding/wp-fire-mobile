@@ -6,18 +6,6 @@
     font-size: 16px; /* Base font size for mobile */
   }
 
-  @media (min-width: 640px) {
-    html {
-      font-size: 16px; /* sm breakpoint */
-    }
-  }
-
-  @media (min-width: 768px) {
-    html {
-      font-size: 16px; /* md breakpoint */
-    }
-  }
-
   @media (min-width: 1024px) {
     html {
       font-size: 18px;

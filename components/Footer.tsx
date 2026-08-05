@@ -9,7 +9,7 @@ export default function Footer() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleHomeClick = (e) => {
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === '/') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });

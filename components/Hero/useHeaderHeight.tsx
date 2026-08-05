@@ -1,28 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-const throttle = (func, limit) => {
-  let lastFunc;
-  let lastRan;
-  return (...args) => {
-    if (!lastRan) {
-      func(...args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(
-        () => {
-          if (Date.now() - lastRan >= limit) {
-            func(...args);
-            lastRan = Date.now();
-          }
-        },
-        Math.max(0, limit - (Date.now() - lastRan))
-      );
-    }
-  };
-};
+import { throttle } from '@/lib/throttle';
 
 export const useHeaderHeight = () => {
   const [headerHeight, setHeaderHeight] = useState(0);

@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { scroller } from 'react-scroll';
+import { useHeaderHeight } from '@/components/Hero/useHeaderHeight';
 
 // export const metadata = {
 //   title: "WP Fire - Services",
@@ -37,50 +38,11 @@ import { scroller } from 'react-scroll';
 //   },
 // };
 
-// Simple throttler for resize events
-const throttle = (func, limit) => {
-  let lastFunc;
-  let lastRan;
-  return (...args) => {
-    if (!lastRan) {
-      func(...args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(
-        () => {
-          if (Date.now() - lastRan >= limit) {
-            func(...args);
-            lastRan = Date.now();
-          }
-        },
-        Math.max(0, limit - (Date.now() - lastRan))
-      );
-    }
-  };
-};
-
 export default function ServicesPage() {
   const router = useRouter();
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  // Dynamically measure header height on mount and resize
-  useEffect(() => {
-    const updateHeaderHeight = throttle(() => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.clientHeight);
-      }
-    }, 200);
-
-    requestAnimationFrame(updateHeaderHeight); // Measure after initial render
-    window.addEventListener('resize', updateHeaderHeight);
-
-    return () => window.removeEventListener('resize', updateHeaderHeight);
-  }, []);
-
+  const headerHeight = useHeaderHeight();
   // Handle scroll to contact section
-  const handleScrollToContact = (e) => {
+  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const sectionId = 'contact-section';
 
@@ -102,7 +64,7 @@ export default function ServicesPage() {
         scroller.scrollTo(scrollTarget, {
           duration: 500,
           smooth: true,
-          offset: -headerHeight || -80, // Use headerHeight with fallback
+          offset: -(headerHeight || 80), // Use headerHeight with fallback
           isDynamic: true,
         });
         setTimeout(() => {
@@ -115,7 +77,7 @@ export default function ServicesPage() {
   }, [headerHeight]);
 
   return (
-    <div className="bg-[#f5f5f5] text-gray-800 w-screen px-10 pb-10">
+    <div className="bg-[#f5f5f5] text-gray-800 w-full px-10 pb-10">
       <main className="max-w-7xl mx-auto px-6 pt-16 lg:py-20 lg:pl-20 ">
         <header className="mb-10">
           <h1 className="text-4xl lg:text-5xl font-light mb-4">
@@ -129,7 +91,7 @@ export default function ServicesPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
             <a
               href="tel:03338802993"
-              className="bg-red-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors text-center"
+              className="bg-red-700 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-600 transition-colors text-center"
             >
               Call Now: 0333 880 2993
             </a>

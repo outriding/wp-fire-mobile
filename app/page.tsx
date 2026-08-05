@@ -1,4 +1,3 @@
-// src/pages/Home.tsx
 import Hero from '../components/Hero/Hero';
 import AboutSection from '../components/AboutSection';
 import Features from '../components/Features';

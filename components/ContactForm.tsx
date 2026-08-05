@@ -1,21 +1,13 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function Contact() {
-  const mapRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // useEffect(() => {
-  //   if (mapRef.current) {
-  //     mapRef.current.innerText =
-  //       "Map placeholder (initialize Google Maps here with your API key)";
-  //   }
-  // }, []);
-
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
@@ -44,10 +36,13 @@ export default function Contact() {
         setSubmitStatus('error');
         if (result.errors) {
           // Map Formspree errors (array of { field, message })
-          const errorMap = result.errors.reduce((acc, err) => {
-            acc[err.field] = err.message;
-            return acc;
-          }, {});
+          const errorMap = result.errors.reduce(
+            (acc: Record<string, string>, err: { field: string; message: string }) => {
+              acc[err.field] = err.message;
+              return acc;
+            },
+            {}
+          );
           setErrors(errorMap);
         } else {
           setErrors({ general: result.error || 'Failed to send message' });
@@ -79,8 +74,6 @@ export default function Contact() {
       </p>
       {/* Main container */}
       <div className="flex flex-col lg:flex-row justify-center items-center w-full max-w-6xl py-4 sm:py-6 md:py-8 gap-6 sm:gap-8">
-        {/* Map */}
-        {/* <div id="contact-map" ref={mapRef} className="w-[40vw] h-[25vh] border border-gray-300 rounded-md overflow-hidden self-center text-center text-sm flex items-center justify-center" ></div> */}
         {/* Contact Form */}
         <div className="flex flex-col w-full lg:w-1/2 items-center">
           <form

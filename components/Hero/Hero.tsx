@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Element, scroller } from 'react-scroll';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -15,7 +14,7 @@ const Hero = () => {
 
   const dynamicHeight = headerHeight > 0 ? `calc(100vh - ${headerHeight}px)` : '100vh';
 
-  const handleScrollToContact = (e) => {
+  const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const sectionId = 'contact-section';
     scroller.scrollTo(sectionId, {

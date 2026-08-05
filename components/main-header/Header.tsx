@@ -6,59 +6,16 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { IoCallOutline } from 'react-icons/io5';
 import { scroller } from 'react-scroll';
-
-// Simple throttler
-const throttle = (func, limit) => {
-  let lastFunc;
-  let lastRan;
-  return (...args) => {
-    if (!lastRan) {
-      func(...args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(
-        () => {
-          if (Date.now() - lastRan >= limit) {
-            func(...args);
-            lastRan = Date.now();
-          }
-        },
-        Math.max(0, limit - (Date.now() - lastRan))
-      );
-    }
-  };
-};
+import { throttle } from '@/lib/throttle';
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const headerRef = useRef(null);
-  const mobileContentRef = useRef(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const mobileContentRef = useRef<HTMLDivElement>(null);
   const lastTopRef = useRef(0);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
-  const [maxVH, setMaxVH] = useState(1);
-
-  // Dynamic --vh to prevent mobile viewport jumps, set to max height
-  useEffect(() => {
-    const updateVH = throttle(() => {
-      const newVH = window.innerHeight * 0.01;
-      if (newVH > maxVH) {
-        setMaxVH(newVH);
-        document.documentElement.style.setProperty('--vh', `${newVH}px`);
-      }
-    }, 200);
-
-    updateVH();
-    window.addEventListener('resize', updateVH);
-    window.addEventListener('orientationchange', updateVH);
-
-    return () => {
-      window.removeEventListener('resize', updateVH);
-      window.removeEventListener('orientationchange', updateVH);
-    };
-  }, [maxVH]);
 
   // Update header height on mount and resize for dynamic offset
   useEffect(() => {
@@ -74,8 +31,10 @@ export default function Header() {
     return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
 
+  const sectionIds = ['home', 'about-section', 'contact-section'];
+
   // scroll spy hook (kept from your original logic)
-  const useScrollSpy = (ids, offset = 0) => {
+  const useScrollSpy = (ids: typeof sectionIds, offset = 0) => {
     const [activeId, setActiveId] = useState('home');
 
     useEffect(() => {
@@ -115,7 +74,6 @@ export default function Header() {
     return activeId;
   };
 
-  const sectionIds = ['home', 'about-section', 'contact-section'];
   const currentActive = useScrollSpy(sectionIds, headerHeight);
 
   useEffect(() => {
@@ -177,7 +135,7 @@ export default function Header() {
     }
   }, [mobileOpen]);
 
-  const handleHashClick = (e, hash) => {
+  const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
     e.preventDefault(); // Always prevent default to control behavior
     const sectionId = hash.slice(1);
 
@@ -241,13 +199,13 @@ export default function Header() {
 
   // Close mobile menu on click outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         mobileOpen &&
         headerRef.current &&
         mobileContentRef.current &&
-        !headerRef.current.contains(event.target) &&
-        !mobileContentRef.current.contains(event.target)
+        !headerRef.current.contains(event.target as Node) &&
+        !mobileContentRef.current.contains(event.target as Node)
       ) {
         setMobileOpen(false);
       }
@@ -260,12 +218,12 @@ export default function Header() {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [mobileOpen]);
+  }, [mobileOpen]); // ← don't forget the dependency
 
   const baseLinkClass =
     'inline-block no-underline font-normal text-base hover:text-[#cf711f] active:text-[#b24f00] focus:outline-none focus:ring-0 transition-colors duration-200';
 
-  const getLinkClass = (section) => {
+  const getLinkClass = (section: string) => {
     if (pathname !== '/') {
       return `${baseLinkClass} text-[#333]`;
     }
