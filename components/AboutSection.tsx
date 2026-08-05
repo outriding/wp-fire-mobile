@@ -7,7 +7,6 @@ import Image from 'next/image';
 const AboutSection = () => {
   return (
     <Element name="about-section">
-      {' '}
       <section
         id="about-section"
         className="pt-16 sm:pt-20 md:pt-24 lg:pt-32 xl:pt-25 pb-8 sm:pb-12 md:pb-16 lg:pb-20 bg-[#f5f5f5] mb-4 sm:mb-5 w-full"
