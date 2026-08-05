@@ -78,7 +78,7 @@ export default function ServicesPage() {
 
   return (
     <div className="bg-[#f5f5f5] text-gray-800 w-full px-10 pb-10">
-      <main className="max-w-7xl mx-auto px-6 pt-16 lg:py-20 lg:pl-20 ">
+      <div className="max-w-7xl mx-auto px-6 pt-16 lg:py-20 lg:pl-20 ">
         <header className="mb-10">
           <h1 className="text-4xl lg:text-5xl font-light mb-4">
             Professional Fire Safety Services
@@ -187,7 +187,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }

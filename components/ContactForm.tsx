@@ -9,6 +9,16 @@ export default function Contact() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+
+    if (!FORMSPREE_ID) {
+      console.error('NEXT_PUBLIC_FORMSPREE_ID is not set');
+      setSubmitStatus('error');
+      setErrors({ general: 'Contact form is temporarily unavailable. Please call us directly.' });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
     setErrors({});
@@ -18,7 +28,7 @@ export default function Contact() {
     const data = Object.fromEntries(form.entries());
 
     try {
-      const response = await fetch('https://formspree.io/f/xovkzkpn', {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
