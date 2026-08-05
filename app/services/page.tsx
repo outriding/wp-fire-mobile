@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
+import { useHeaderHeight } from '@/components/Hero/useHeaderHeight';
 
 // export const metadata = {
 //   title: "WP Fire - Services",
@@ -37,48 +38,9 @@ import { scroller } from 'react-scroll';
 //   },
 // };
 
-// Simple throttler for resize events
-const throttle = (func, limit) => {
-  let lastFunc;
-  let lastRan;
-  return (...args) => {
-    if (!lastRan) {
-      func(...args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(
-        () => {
-          if (Date.now() - lastRan >= limit) {
-            func(...args);
-            lastRan = Date.now();
-          }
-        },
-        Math.max(0, limit - (Date.now() - lastRan))
-      );
-    }
-  };
-};
-
 export default function ServicesPage() {
   const router = useRouter();
-  const [headerHeight, setHeaderHeight] = useState(0);
-
-  // Dynamically measure header height on mount and resize
-  useEffect(() => {
-    const updateHeaderHeight = throttle(() => {
-      const header = document.querySelector('header');
-      if (header) {
-        setHeaderHeight(header.clientHeight);
-      }
-    }, 200);
-
-    requestAnimationFrame(updateHeaderHeight); // Measure after initial render
-    window.addEventListener('resize', updateHeaderHeight);
-
-    return () => window.removeEventListener('resize', updateHeaderHeight);
-  }, []);
-
+  const headerHeight = useHeaderHeight();
   // Handle scroll to contact section
   const handleScrollToContact = (e) => {
     e.preventDefault();

@@ -6,29 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { IoCallOutline } from 'react-icons/io5';
 import { scroller } from 'react-scroll';
-
-// Simple throttler
-const throttle = (func, limit) => {
-  let lastFunc;
-  let lastRan;
-  return (...args) => {
-    if (!lastRan) {
-      func(...args);
-      lastRan = Date.now();
-    } else {
-      clearTimeout(lastFunc);
-      lastFunc = setTimeout(
-        () => {
-          if (Date.now() - lastRan >= limit) {
-            func(...args);
-            lastRan = Date.now();
-          }
-        },
-        Math.max(0, limit - (Date.now() - lastRan))
-      );
-    }
-  };
-};
+import { throttle } from '@/lib/throttle';
 
 export default function Header() {
   const pathname = usePathname();
@@ -38,27 +16,6 @@ export default function Header() {
   const lastTopRef = useRef(0);
   const [headerHeight, setHeaderHeight] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
-  const [maxVH, setMaxVH] = useState(1);
-
-  // Dynamic --vh to prevent mobile viewport jumps, set to max height
-  useEffect(() => {
-    const updateVH = throttle(() => {
-      const newVH = window.innerHeight * 0.01;
-      if (newVH > maxVH) {
-        setMaxVH(newVH);
-        document.documentElement.style.setProperty('--vh', `${newVH}px`);
-      }
-    }, 200);
-
-    updateVH();
-    window.addEventListener('resize', updateVH);
-    window.addEventListener('orientationchange', updateVH);
-
-    return () => {
-      window.removeEventListener('resize', updateVH);
-      window.removeEventListener('orientationchange', updateVH);
-    };
-  }, [maxVH]);
 
   // Update header height on mount and resize for dynamic offset
   useEffect(() => {
