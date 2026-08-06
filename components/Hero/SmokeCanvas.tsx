@@ -6,12 +6,18 @@ import vertexShader from './shaders/vertex.glsl';
 import fragmentShader from './shaders/fragment.glsl';
 import { throttle } from '@/lib/throttle';
 
-const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
+interface SmokeCanvasProps {
+  dynamicHeight?: string;
+}
+
+const SmokeCanvas = ({ dynamicHeight = '100dvh' }: SmokeCanvasProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
+
+    let cancelled = false;
 
     const scene = new THREE.Scene();
     let width = containerRef.current.clientWidth;
@@ -43,14 +49,19 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     let baseCamY = 10;
 
     const textureLoader = new THREE.TextureLoader();
-    let perlinTexture: THREE.Texture;
+    let perlinTexture: THREE.Texture | undefined;
     let smokeMeshes: SmokeMesh[] = [];
 
-    let smoke1: SmokeMesh;
-    let smoke2: SmokeMesh;
-    let smoke3: SmokeMesh;
+    let smoke1: SmokeMesh | undefined;
+    let smoke2: SmokeMesh | undefined;
+    let smoke3: SmokeMesh | undefined;
 
     textureLoader.load('/images/perlin.png', (texture) => {
+      if (cancelled) {
+        texture.dispose();
+        return;
+      }
+
       perlinTexture = texture;
       perlinTexture.wrapS = THREE.RepeatWrapping;
       perlinTexture.wrapT = THREE.RepeatWrapping;
@@ -152,6 +163,8 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
 
       width = containerRef.current.clientWidth;
       height = containerRef.current.clientHeight;
+      if (width === 0 || height === 0) return;
+
       const aspect = width / height;
 
       camera.aspect = aspect;
@@ -203,14 +216,23 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
     };
     req = requestAnimationFrame(animate);
 
-    const handleResize = throttle(updateResponsive, 80);
-    window.addEventListener('resize', handleResize);
+    // Respond to container size changes (including the one-time change once
+    // the header height resolves) without tearing down and rebuilding the scene.
+    const throttledUpdate = throttle(updateResponsive, 80);
+    const resizeObserver = new ResizeObserver(() => {
+      throttledUpdate();
+    });
+    resizeObserver.observe(containerRef.current);
+
+    // Orientation changes can momentarily report stale container dimensions,
+    // so re-measure shortly after rather than relying on ResizeObserver alone.
     const handleOrientationChange = () => setTimeout(updateResponsive, 160);
     window.addEventListener('orientationchange', handleOrientationChange);
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(req);
-      window.removeEventListener('resize', handleResize);
+      resizeObserver.disconnect();
       window.removeEventListener('orientationchange', handleOrientationChange);
       renderer.dispose();
       smokeGeometry.dispose();
@@ -220,7 +242,7 @@ const SmokeCanvas = ({ dynamicHeight = '100dvh' }) => {
         m.geometry.dispose();
       });
     };
-  }, [dynamicHeight]);
+  }, []); // ← runs once; dynamicHeight no longer tears down the scene
 
   return (
     <div
