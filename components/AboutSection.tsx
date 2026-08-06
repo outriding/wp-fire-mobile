@@ -19,7 +19,7 @@ const AboutSection = () => {
         <div className="about-section-flex flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-4 sm:mb-5">
           <div className="about-section-texts w-full lg:w-1/2">
             <p className="about-section-text-1 leading-relaxed sm:leading-loose pl-0 sm:pl-4 lg:pl-5 mb-4 sm:mb-5 text-base sm:text-lg lg:text-xl font-medium">
-              <strong>So why do our clients choose WP Fire --</strong> and why do they return to us
+              <strong>So why do our clients choose WP Fire -</strong> and why do they return to us
               for new projects? The answer is simple: we put the customer first. Every system we
               design, install, commission, or maintain is tailored to the specific needs of the
               building and the people who rely on it.

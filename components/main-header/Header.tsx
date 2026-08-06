@@ -267,17 +267,17 @@ export default function Header() {
           onClick={() => setMobileOpen((s) => !s)}
         >
           <span
-            className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
+            className={`w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
               mobileOpen ? 'rotate-45 translate-y-2' : ''
             }`}
           ></span>
           <span
-            className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
+            className={`w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
               mobileOpen ? 'opacity-0' : ''
             }`}
           ></span>
           <span
-            className={`w-7 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
+            className={`w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 ease-in-out ${
               mobileOpen ? '-rotate-45 -translate-y-2' : ''
             }`}
           ></span>
