@@ -12,8 +12,6 @@ const Hero = () => {
   const pathname = usePathname();
   const headerHeight = useHeaderHeight();
 
-  const dynamicHeight = headerHeight > 0 ? `calc(100vh - ${headerHeight}px)` : '100vh';
-
   const handleScrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const sectionId = 'contact-section';
@@ -24,14 +22,14 @@ const Hero = () => {
       isDynamic: true,
     });
     if (window.location.hash !== `#${sectionId}`) {
-      router.replace(`/${pathname}#${sectionId}`);
+      router.replace(`${pathname}#${sectionId}`);
     }
   };
 
   return (
     <Element name="home">
       <section className="section-1 relative">
-        <SmokeCanvas dynamicHeight={dynamicHeight} />
+        <SmokeCanvas dynamicHeight="calc(100vh - var(--header-height))" />
 
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-[70rem] mx-auto w-full px-4 sm:px-6 lg:px-8">
